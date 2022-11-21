@@ -26,12 +26,12 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG") == "True"
+DEBUG = os.getenv("DEBUG") == "Ture"
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "Modakelastic-env.eba-czwvtwgp.ap-northeast-2.elasticbeanstalk.com",
+    "Kdt6team-env.eba-rmvmzut2.ap-northeast-2.elasticbeanstalk.com",
 ]
 
 
@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     "mathfilters",
     "notes",
     "shoppings",
-    "chat",
     "cards",
     "vocies",
     "accounts",
@@ -88,6 +87,28 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "semi_pjt_2.wsgi.application"
+
+
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "kdt_6_rds", # 코드 블럭 아래 이미지 참고하여 입력
+#         "USER": "postgres",
+#         "PASSWORD": "faker1121", # 데이터베이스 생성 시 작성한 패스워드
+#         "HOST": "kdt-6-rds.cjszo6864ame.ap-northeast-2.rds.amazonaws.com", # 코드 블럭 아래 이미지 참고하여 입력
+#         "PORT": "5432",
+#     }
+# }
 
 
 # Password validation
@@ -193,12 +214,12 @@ import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES["default"].update(db_from_env)
 
-# ASGI_APPLICATION = "semi_pjt_2.asgi.application"
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels_redis.core.RedisChannelLayer",
-#         "CONFIG": {
-#             "hosts": [("127.0.0.1", 6379)],
-#         },
-#     },
-# }
+ASGI_APPLICATION = "semi_pjt_2.asgi.application"
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
