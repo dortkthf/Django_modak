@@ -272,7 +272,7 @@
         {% if cards.user == request.user %}
         <div class='d-flex justify-content-end'>
           <a href="{% url 'cards:groupcard_update' request.user.pk %}" class="btn btn-success mt-5 me-3"> 벽난로 바꾸기 </a>
-          <a href="{% url 'cards:groupcard_delete'%}" class="btn btn-danger mt-5"> 벽난로 없애기 </a>
+          <a href="{% url 'cards:groupcard_delete' cards.pk %}" class="btn btn-danger mt-5"> 벽난로 없애기 </a>
         </div>
         {% else %}
         <div class='d-flex justify-content-end mt-4'>
@@ -491,9 +491,9 @@
         </div>
         <div class='mb-2 rounded-2 p-1'>
           {% if comment.user.nickname %}
-          <p class='fs-5 text-center m-0 p-0'>{{ comment.user.nickname }} </p>
+          <p class='fs-5 text-center m-0 p-0'  href='{% url 'accounts:profile' comment.user.pk %}'>{{ comment.user.nickname }} </p>
           {% else %}
-          <p class='fs-5 text-center m-0 p-0'>{{ comment.user }} </p>
+          <p class='fs-5 text-center m-0 p-0'  href='{% url 'accounts:profile' comment.user.pk %}'>{{ comment.user }} </p>
           {% endif %}
           <p class='small pt-1 text-end'>{{ comment.created_at }}</p>
           <p class='my-1 px-2 text-start' style="white-space: pre-line;"> {{ comment.content }} </p>

@@ -494,9 +494,9 @@
         </div>
         <div class='mb-2 rounded-2 p-1'>
           {% if comment.user.nickname %}
-          <p class='fs-5 text-center m-0 p-0'>{{ comment.user.nickname }} </p>
+          <a class='fs-5 text-center m-0 p-0' href='{% url 'accounts:profile' comment.user.pk %}'>{{ comment.user.nickname }} </a>
           {% else %}
-          <p class='fs-5 text-center m-0 p-0'>{{ comment.user }} </p>
+          <a class='fs-5 text-center m-0 p-0' href='{% url 'accounts:profile' comment.user.pk %}'>{{ comment.user }} </a>
           {% endif %}
           <p class='small pt-1 text-end'>{{ comment.created_at }}</p>
           <p class='my-1 px-2 text-start' style="white-space: pre-line;"> {{ comment.content }} </p>
