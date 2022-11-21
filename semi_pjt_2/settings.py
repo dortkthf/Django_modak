@@ -29,11 +29,10 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG") == "True"
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    # "Elastic Beanstalk URL",
-    "Bornfirebean-env.eba-87fn4uun.ap-northeast-2.elasticbeanstalk.com",  # 예시입니다. 본인 URL로 해주세요.
+    "Modakelastic-env.eba-czwvtwgp.ap-northeast-2.elasticbeanstalk.com",  # 예시입니다. 본인 URL로 해주세요.
     "127.0.0.1",
     "localhost",
 ]
@@ -96,9 +95,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "semi_pjt_2.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -136,7 +132,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = "/static/"
-
+STATIC_ROOT = "staticfiles"
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -153,9 +149,18 @@ if DEBUG:
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
-
 else:
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("DATABASE_NAME"),  # .env 파일에 value 작성
+            "USER": "postgres",
+            "PASSWORD": os.getenv("DATABASE_PASSWORD"),  # .env 파일에 value 작성
+            "HOST": os.getenv("DATABASE_HOST"),  # .env 파일에 value 작성
+            "PORT": "5432",
+        }
+    }
+    DEFAULT_FILE_STORAGE = "semi_pjt_2.storages.MediaStorage"
 
     AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
@@ -167,16 +172,7 @@ else:
         AWS_REGION,
     )
     STATIC_ROOT = BASE_DIR / "static"
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv("DATABASE_NAME"),  # .env 파일에 value 작성
-            "USER": "postgres",
-            "PASSWORD": os.getenv("DATABASE_PASSWORD"),  # .env 파일에 value 작성
-            "HOST": os.getenv("DATABASE_HOST"),  # .env 파일에 value 작성
-            "PORT": "5432",
-        }
-    }
+
 AUTH_USER_MODEL = "accounts.User"
 
 from django.contrib import messages
@@ -189,12 +185,6 @@ MESSAGE_TAGS = {
     messages.ERROR: "alert-danger",
 }
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
 
 """
 기존 DATABASES 코드 아래에 아래 세 줄을 추가합니다.
