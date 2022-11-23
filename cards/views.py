@@ -17,7 +17,9 @@ from django.db.models import Q
 @login_required
 def index(request):
     groupcards = Groupcard.objects.order_by("-pk")
-    popularity = UserCard.objects.annotate(follow=Count("user__followers")).order_by("-follow")[:3]
+    popularity = UserCard.objects.annotate(follow=Count("user__followers")).order_by(
+        "-follow"
+    )[:3]
     random_user = UserCard.objects.order_by("?")[:3]
     user = get_user_model().objects.get(pk=request.user.pk)
     # pop_user = UserCard.
